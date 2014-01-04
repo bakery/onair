@@ -7,4 +7,9 @@ Router.map(function () {
     path: '/',
     controller : 'LandingController'
   });
+
+  this.route('rooms', {
+  	path: '/rooms',
+  	controller: 'RoomsController'
+  });
 });
