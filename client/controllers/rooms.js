@@ -3,7 +3,6 @@ RoomsController = RouteController.extend({
     template: 'rooms',
 
     before: function () {
-
     },
 
     after: function () {

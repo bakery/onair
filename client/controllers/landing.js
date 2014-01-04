@@ -2,7 +2,13 @@ LandingController = RouteController.extend({
     template: 'landing',
 
     before: function () {
-
+        var user = Meteor.user();
+        if(user){
+            if(user.services.soundcloud){
+                var accessToken = user.services.soundcloud.accessToken;
+                SC.accessToken(accessToken);
+            }
+        }
     },
 
     after: function () {

@@ -1,6 +1,8 @@
 <template name="rooms">
-	{{>newRoomForm }}
-	<hr>
+	{{#if canCreateRoom}}
+		{{>newRoomForm }}
+		<hr>
+	{{/if}}
 	<ul class="list-group">
 		{{#each rooms}}
 			<li class="list-group-item">
