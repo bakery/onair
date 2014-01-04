@@ -2,6 +2,7 @@
   "packages": {
     "iron-router": {},
     "scss": {},
-    "bourbon": {}
+    "bourbon": {},
+    "accounts-soundcloud": {}
   }
 }

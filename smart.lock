@@ -10,6 +10,9 @@
       },
       "bourbon": {
         "version": "3.1.8.1"
+      },
+      "accounts-soundcloud": {
+        "version": "0.1.2"
       }
     },
     "packages": {
@@ -27,6 +30,16 @@
         "git": "https://github.com/chicagogrooves/meteor-bourbon.git",
         "tag": "v3.1.8.1",
         "commit": "b55f0968fe7d4a2886898cd8e81394de066a3ae1"
+      },
+      "accounts-soundcloud": {
+        "git": "https://github.com/sylvaingi/meteor-accounts-soundcloud.git",
+        "tag": "v0.1.2",
+        "commit": "962879b116bdb107752fc1381d0e840f802e00ca"
+      },
+      "soundcloud": {
+        "git": "https://github.com/sylvaingi/meteor-soundcloud.git",
+        "tag": "v0.1.1",
+        "commit": "7e152a1fa892d73d9ef41f070f6d112014283983"
       }
     }
   }
