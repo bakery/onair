@@ -3,6 +3,7 @@
     "iron-router": {},
     "scss": {},
     "bourbon": {},
-    "accounts-soundcloud": {}
+    "accounts-soundcloud": {},
+    "bootstrap-3": {}
   }
 }
