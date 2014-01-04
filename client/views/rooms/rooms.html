@@ -1,8 +1,12 @@
 <template name="rooms">
 	{{>newRoomForm }}
-	{{#each rooms}}
-		<h1>{{name}}</h1>
-		<p>{{description}}</p>
-		<hr>
-	{{/each}}
+	<hr>
+	<ul class="list-group">
+		{{#each rooms}}
+			<li class="list-group-item">
+				<h1>{{name}}</h1>
+				<p>{{description}}</p>
+			</li>
+		{{/each}}
+	</ul>
 </template>
