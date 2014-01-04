@@ -9,10 +9,13 @@ RoomsController = RouteController.extend({
     },
 
     waitOn: function () {
+        return Meteor.subscribe('rooms');
     },
 
     data: function () {
-        return {};
+        return {
+            rooms : Rooms.find({})
+        };
     }
 
     // action: function () {
