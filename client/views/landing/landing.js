@@ -1,5 +1,9 @@
 Template.landing.events = {
-	'click .login' : function(){
+	'click .login-sc' : function(){
 		Meteor.loginWithSoundcloud();
+	},
+
+	'click .login-fb' : function(){
+		Meteor.loginWithFacebook();
 	}
 };

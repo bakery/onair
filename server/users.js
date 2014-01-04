@@ -15,6 +15,15 @@ Accounts.onCreateUser(function(options, user) {
             }
         });
     }
+
+    if(typeof user.services.facebook !== 'undefined'){
+        var fbProfile = user.services.facebook;
+        user.profile = _.extend({}, {
+            name : fbProfile.name,
+            picture : 'http://graph.facebook.com/' +  fbProfile.id + '/picture?width=100&height=100'
+        });
+    }
+
   }
 
   return user;
