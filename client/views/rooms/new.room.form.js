@@ -8,7 +8,9 @@ Template.newRoomForm.events = {
 				if(error){
 					alert('Something went wrong');
 				} else {
-					console.log('room created', room);
+					Router.go('room', {id: room});
+
+					//console.log('room created', room);
 				}
 			});
 		} else {
