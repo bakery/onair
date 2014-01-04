@@ -1,0 +1,12 @@
+<template name="sc-favorites">
+	<ul class="list-group">
+	{{#each favorites}}
+		<li class="list-group-item">
+			<h3>{{title}} <small>by {{user.username}}</small></h3>
+			{{#if artwork_url}}
+				<img width="100" src="{{artwork_url}}">
+			{{/if}}
+		</li>
+	{{/each}}
+	</ul>
+</template>
