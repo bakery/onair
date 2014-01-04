@@ -9,8 +9,6 @@ Template.newRoomForm.events = {
 					alert('Something went wrong');
 				} else {
 					Router.go('room', {id: room});
-
-					//console.log('room created', room);
 				}
 			});
 		} else {

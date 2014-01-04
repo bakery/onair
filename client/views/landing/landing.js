@@ -1,4 +1,3 @@
-
 var handleOAuth = function(e){
 	if(typeof e !== 'undefined'){
 		alert('Something went terribly wrong. Run around scream and shout.');
