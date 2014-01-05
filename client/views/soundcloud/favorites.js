@@ -1,10 +1,26 @@
+var DataHelpers = {
+	getTrackData : function(id){
+		return _.find(Session.get('sc.favorites'), function(f){
+			return f.id === id;
+		});
+	}
+};
+
 Template['sc-favorites'].favorites = function(){
 	return Session.get('sc.favorites');
 };
 
+Template['sc-favorites'].playlist = function(){
+	return Session.get('sc.playlist');
+};
+
 Template['sc-favorites'].events = {
-	'click .stream-button' : function(event, template){
-		var url = $(event.currentTarget).data('url');
-		Sounds.createSoundFromSoundCloud({ stream_url : url }).play();
+	'click .add-button' : function(event, template){
+		var id = $(event.currentTarget).data('id');
+
+		postal.publish({
+			topic : 'track.addtoplaylist',
+			data : DataHelpers.getTrackData(id)
+		});
 	}
 };

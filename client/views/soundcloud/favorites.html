@@ -1,13 +1,42 @@
 <template name="sc-favorites">
-	<ul class="list-group">
-	{{#each favorites}}
-		<li class="list-group-item">
-			<h3>{{title}} <small>by {{user.username}}</small></h3>
-			<button class="stream-button" data-url="{{stream_url}}">stream</button>
-			{{#if artwork_url}}
-				<img width="100" src="{{artwork_url}}">
+	
+	<div class="row">
+		<div class="col-md-6">
+			{{#if playlist}}
+				<h3>{{playlist.tracks}} tracks ({{playlist.position}}/{{playlist.duration}})</h3>
+				<div class="progress progress-striped active">
+				  <div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: {{playlist.progress}}%">
+				    <span class="sr-only">{{playlist.progress}}% Complete</span>
+				  </div>
+				</div>
+				
+				<ul class="list-group">
+					{{#each playlist.items}}
+					<li class="list-group-item" style="opacity:{{#if playing}}1{{else}}0.5{{/if}};">
+					{{#with attributes}}
+						<h3>{{title}} <small>by {{user.username}}</small></h3>
+						{{#if artwork_url}}
+						<img width="50" src="{{artwork_url}}">
+						{{/if}}
+					{{/with}}
+					</li>
+					{{/each}}
+				</ul>		
+				<hr>
 			{{/if}}
-		</li>
-	{{/each}}
-	</ul>
+		</div>
+		<div class="col-md-6">
+			<ul class="list-group">
+			{{#each favorites}}
+				<li class="list-group-item">
+					<h3>{{title}} <small>by {{user.username}}</small></h3>
+					<button class="add-button" data-id="{{id}}">+ Add to playlist</button>
+					{{#if artwork_url}}
+						<img width="100" src="{{artwork_url}}">
+					{{/if}}
+				</li>
+			{{/each}}
+			</ul>
+		</div>
+	</div>
 </template>
