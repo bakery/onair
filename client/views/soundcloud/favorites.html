@@ -14,7 +14,7 @@
 					{{#each playlist.items}}
 					<li class="list-group-item" style="opacity:{{#if playing}}1{{else}}0.5{{/if}};">
 					{{#with attributes}}
-						<h3>{{title}} <small>by {{user.username}}</small></h3>
+						<h3>{{title}} <small>by {{username}}</small></h3>
 						{{#if artwork_url}}
 						<img width="50" src="{{artwork_url}}">
 						{{/if}}
