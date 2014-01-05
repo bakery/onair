@@ -44,6 +44,6 @@ _.extend(Sound.prototype, Media.prototype, {
 
     _updateState : function(playing){
         this._playing = playing;
-        this.trigger('state-changed');
+        this.trigger('state-changed',this);
     }
 });
