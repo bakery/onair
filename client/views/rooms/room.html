@@ -1,4 +1,13 @@
 <template name="room">
 	<h1>{{room.name}}</h1>
 	<p>{{room.description}}</p>
+
+	<div class="row">
+		<div class="col-md-6">
+			{{yield 'playlist'}}
+		</div>
+		<div class="col-md-6">
+			{{yield 'favorites'}}
+		</div>
+	</div>
 </template>

@@ -17,9 +17,4 @@ Router.map(function () {
         path: '/room/:id',
         controller: 'RoomController'
     });
-
-    this.route('sc-favorites', {
-        path: '/sc/favorites',
-        controller: 'SCFavoritesController'
-    });
 });
