@@ -23,13 +23,24 @@ var Sound = function(attributes){
 
 _.extend(Sound.prototype, Media.prototype, {
     play : function(){
-        SC.stream(this.attributes.stream_url, _.bind(function(sound){
+        this._sound = SC.stream(this.attributes.stream_url, _.bind(function(sound){
             this._updateState(true);
 
+            var theSound = this;
+
+            // report ping every 5 seconds or so
+            var reportPing = _.throttle(function(position){
+                theSound._ping(position);
+            }, 5000);
+
             sound.play({
-                onfinish : _.bind(function(){
-                    this._updateState(false);
-                },this)
+                onfinish : function(){
+                    theSound._updateState(false);
+                },
+
+                whileplaying : function(){
+                    reportPing(this.position);
+                }
             });
         },this));
     },
@@ -42,8 +53,16 @@ _.extend(Sound.prototype, Media.prototype, {
         return _.extend({}, this.attributes);
     },
 
+    getDuration : function(){
+        return this.attributes.duration;
+    },
+
     _updateState : function(playing){
         this._playing = playing;
         this.trigger('state-changed',this);
+    },
+
+    _ping : function(position){
+        this.trigger('ping', { position : position });
     }
 });

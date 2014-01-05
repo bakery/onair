@@ -8,6 +8,8 @@ _.extend(Media.prototype, Backbone.Events, {
     /** Events
         
         state-changed
+        ping
+        
     **/
 
     play : function(){
@@ -19,6 +21,11 @@ _.extend(Media.prototype, Backbone.Events, {
     },
 
     getAttributes : function(){
+        throw 'Not implemented';
+    },
+
+    // in ms
+    getDuration : function(){
         throw 'Not implemented';
     }
 
