@@ -7,12 +7,16 @@
 
 
 Playlist = function(){
-    this._items = [];
-    this._currentIndex = 0;
-    this._playing = false;
+    this.initialize();
 };
 
 _.extend(Playlist.prototype, Backbone.Events,{
+
+    initialize : function(){
+        this._items = [];
+        this._currentIndex = 0;
+        this._playing = false;
+    },
 
     addMedia : function(media){
         media.on('state-changed', _.bind(this._onMediaStateChanged,this));
@@ -108,3 +112,40 @@ _.extend(Playlist.prototype, Backbone.Events,{
         this.trigger('ping',{ position : this.getPosition() });
     }
 });
+
+
+// synced playlist
+// extends basic playlist and syncs it with the server
+
+SyncedPlaylist = function(){
+    this.initialize();
+};
+
+_.extend(SyncedPlaylist.prototype, Playlist.prototype, {
+    initialize : function(){
+        Playlist.prototype.initialize.call(this);
+        this.on('ping', this._onListPing, this);
+    },
+
+    _onListPing : function(){
+        console.log('server syncing the playlist');
+        this._sync();
+    },
+
+    _sync : function(){
+        var data = _.extend({ _id : this._serverPlaylistId },{
+            playlist : this.toJSON()
+        });
+
+        Meteor.call('syncPlaylist', data, _.bind(function(error,playlistId){
+            if(error){
+                console.error('playlist sync failed',error);
+            }
+
+            this._serverPlaylistId = playlistId;
+
+        },this));
+    }
+});
+
+

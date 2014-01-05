@@ -16,7 +16,7 @@ SCFavoritesController = RouteController.extend({
 
     before : function(){
         
-        this.playlist = new Playlist();
+        this.playlist = new SyncedPlaylist();
 
         this.playlist.on('ping', _.bind(function(position){
             this._updatePlaylist();
