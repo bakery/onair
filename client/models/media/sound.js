@@ -23,7 +23,8 @@ var Sound = function(attributes){
 
 _.extend(Sound.prototype, Media.prototype, {
     play : function(){
-        this._sound = SC.stream(this.attributes.stream_url, _.bind(function(sound){
+        SC.stream(this.attributes.stream_url, _.bind(function(sound){
+            this._sound = sound;
             this._updateState(true);
 
             var theSound = this;
@@ -55,6 +56,17 @@ _.extend(Sound.prototype, Media.prototype, {
 
     getDuration : function(){
         return this.attributes.duration;
+    },
+
+    getPosition : function(){
+        return this._sound ? this._sound.position : 0;
+    },
+
+    toJSON : function(){
+        return {
+            attributes : this.attributes,
+            playing : this._playing
+        };
     },
 
     _updateState : function(playing){

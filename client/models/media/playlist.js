@@ -2,6 +2,9 @@
 //  - add media 
 //  - play media 
 //  - go to the next media when done with the current one
+//  - events
+//      - ping
+
 
 Playlist = function(){
     this._items = [];
@@ -9,9 +12,11 @@ Playlist = function(){
     this._playing = false;
 };
 
-Playlist.prototype = {
+_.extend(Playlist.prototype, Backbone.Events,{
+
     addMedia : function(media){
         media.on('state-changed', _.bind(this._onMediaStateChanged,this));
+        media.on('ping', _.bind(this._onMediaPing, this));
         this._items.push(media);
     },
 
@@ -21,15 +26,61 @@ Playlist.prototype = {
             throw 'The list is already playing';
         }
 
-        if(this.size() === 0){
+        if(this.getSize() === 0){
             throw 'Cannot play : the playlist is empty';
         } else {
             this._playMedia();
         }
     },
 
-    size : function(){
+    isPlaying : function(){
+        return this._playing;
+    },
+
+    getSize : function(){
         return this._items.length;
+    },
+
+    getDuration : function(){
+        return _.reduce(this._items, function(memo, media){
+            return memo + media.getDuration();
+        }, 0);
+    },
+
+    getPosition : function(){
+        if(!this._playing){
+            return 0;
+        } else {
+            var items = this._items;
+            // elapsed time of all previous media items + position of the current item
+            return _.reduce(this._previousMedia(), function(memo, media){
+                return memo + media.getDuration();
+            }, 0) + this._currentMedia().getPosition();
+        }
+    },
+
+    toJSON : function(){
+        var position = this.getPosition();
+        var duration = this.getDuration();
+
+        return {
+            items : _.map(this._items, function(i){ return i.toJSON(); }),
+            position : position,
+            duration : duration,
+            tracks : this.getSize(),
+            progress : Math.floor((position/duration)*100)
+        };
+    },
+
+    _currentMedia : function(){
+        return this._items[this._currentIndex];
+    },
+
+    // things that have been played
+    _previousMedia : function(){
+        return this._currentIndex > 0 ? _.map(_.range(0, this._currentIndex+1), _.bind(function(i){
+            return this._items[i];
+        },this)) : [];
     },
 
     _playMedia : function(){
@@ -52,4 +103,8 @@ Playlist.prototype = {
             }
         }
     },
-};
+
+    _onMediaPing : function(position){
+        this.trigger('ping',{ position : this.getPosition() });
+    }
+});

@@ -9,7 +9,7 @@ _.extend(Media.prototype, Backbone.Events, {
         
         state-changed
         ping
-        
+
     **/
 
     play : function(){
@@ -26,6 +26,15 @@ _.extend(Media.prototype, Backbone.Events, {
 
     // in ms
     getDuration : function(){
+        throw 'Not implemented';
+    },
+
+    // im ms
+    getPosition : function(){
+        throw 'Not implemented';
+    },
+
+    toJSON : function(){
         throw 'Not implemented';
     }
 
