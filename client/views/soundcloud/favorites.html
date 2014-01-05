@@ -3,6 +3,7 @@
 	{{#each favorites}}
 		<li class="list-group-item">
 			<h3>{{title}} <small>by {{user.username}}</small></h3>
+			<button class="stream-button" data-url="{{stream_url}}">stream</button>
 			{{#if artwork_url}}
 				<img width="100" src="{{artwork_url}}">
 			{{/if}}
