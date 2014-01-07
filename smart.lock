@@ -16,6 +16,9 @@
       },
       "bootstrap-3": {
         "version": "0.3.7"
+      },
+      "moment": {
+        "version": "2.2.1"
       }
     },
     "packages": {
@@ -43,6 +46,11 @@
         "git": "https://github.com/mangasocial/meteor-bootstrap-3.git",
         "tag": "v0.3.7",
         "commit": "5dd0d142c870647b910be80bc777b96f0dd45e5e"
+      },
+      "moment": {
+        "git": "https://github.com/acreeger/meteor-moment.git",
+        "tag": "v2.2.1",
+        "commit": "9ee12e714afe56b189f53076447b7b54f3012065"
       },
       "soundcloud": {
         "git": "https://github.com/sylvaingi/meteor-soundcloud.git",

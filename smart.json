@@ -4,6 +4,7 @@
     "scss": {},
     "bourbon": {},
     "accounts-soundcloud": {},
-    "bootstrap-3": {}
+    "bootstrap-3": {},
+    "moment": {}
   }
 }

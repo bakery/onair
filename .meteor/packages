@@ -4,7 +4,6 @@
 # but you can also edit it by hand.
 
 standard-app-packages
-autopublish
 insecure
 preserve-inputs
 iron-router
@@ -13,4 +12,4 @@ bourbon
 accounts-soundcloud
 accounts-facebook
 bootstrap-3
-backbone
+moment
