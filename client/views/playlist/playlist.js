@@ -1,6 +1,4 @@
-
 var channel;
-//var playbackStats = {};
 
 Template.playlist.created = function(){
 	channel = postal.channel();

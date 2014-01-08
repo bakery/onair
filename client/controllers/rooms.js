@@ -34,25 +34,33 @@ RoomController = RouteController.extend({
         this.playbackManager = new PlaybackManager();
     },
 
+
+    before : function(){
+        var room = this.params.id;
+        this.subscribe('roomById', room).wait();
+        this.subscribe('playlistsForRoom', room).wait();
+    },
+
     after : function(){
         Soundcloud.getFavorites();
-
         this.render('sc-favorites', {to: 'favorites'});
         this.render('playlist', {to: 'playlist'});
+
+        this._checkSync();
     },
 
-    waitOn: function () {
-        var room = this.params.id;
-
-        return [
-            Meteor.subscribe('roomById', room, _.bind(this._onGotRoom,this)),
-            Meteor.subscribe('playlistsForRoom', room),
-            Soundcloud.checkOAuth()
-        ];
+    waitOn : function(){
+        return Soundcloud.checkOAuth();
     },
 
-    _onGotRoom : function(){
+    _checkSync : function(){
         var theRoom = Rooms.findOne({});
+        
+        if(typeof theRoom === 'undefined'){
+            console.log('trying to sync the room but it is not ready');
+            return;
+        }
+
         if(theRoom.live){
             // if the room is live already, sync playback
             Meteor.call('syncRoom',theRoom._id,function(error,response){

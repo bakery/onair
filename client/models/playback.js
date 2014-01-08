@@ -63,24 +63,6 @@ PlaybackManager.prototype = {
             }
 
             sound.play(options);
-
-            // if(typeof offset !== 'undefined'){
-            //     // Pause an already loaded and playing song, change position, then resume.
-            //     sound.pause();
-                 
-            //     // This function triggers after the new position actually
-            //     // takes effect. It's not instantaneous, evidently. The reason why
-            //     // I'm using a callback at position 0 is that setPosition also doesn't
-            //     // set the new position exactly.
-            //     var positionCallback = function(eventPosition) {
-            //       this.clearOnPosition(0, positionCallback);
-            //       this.resume();
-            //     };
-
-            //     sound.onPosition(0, positionCallback);
-            //     sound.setPosition(offset);
-            // }
-
         },this));
     },
 
@@ -182,6 +164,7 @@ PlaybackManager.prototype = {
             this._playMedia(trackOffset);
         } else {
             alert('Looks like this room is done - no lights, no music');
+            console.log('room with no music', syncData, this._items);
         }
     }
 };
