@@ -26,3 +26,7 @@ Meteor.publish('playlistsForRoom', function(room){
 
     return Playlists.find({ room : room });
 });
+
+Meteor.publish('listenersForRoom', function(room){
+	return Listeners.find({ room : room });
+});
