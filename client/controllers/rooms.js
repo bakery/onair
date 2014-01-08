@@ -57,7 +57,7 @@ RoomController = RouteController.extend({
     },
 
     _checkSync : function(){
-        var theRoom = Rooms.findOne({});
+        var theRoom = Rooms.findOne({ _id : this.params.id });
         
         if(typeof theRoom === 'undefined'){
             console.log('trying to sync the room but it is not ready');
