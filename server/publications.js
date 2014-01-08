@@ -10,7 +10,8 @@ Meteor.publish('currentUser', function() {
 });
 
 Meteor.publish('rooms', function() {
-    return Rooms.find({});
+    // only publish live rooms
+    return Rooms.find({ live : true });
 });
 
 Meteor.publish('roomById', function(room){
