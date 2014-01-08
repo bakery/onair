@@ -22,5 +22,11 @@ Meteor.methods({
                 live : true
             }
         });
+    },
+
+    syncRoom : function(room){
+        var now = new Date().getTime();
+        var theRoom = Rooms.findOne({ _id : room });
+        return { offset : now - theRoom.wentLive };
     }
 });

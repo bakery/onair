@@ -45,9 +45,28 @@ RoomController = RouteController.extend({
         var room = this.params.id;
 
         return [
-            Meteor.subscribe('roomById', room),
+            Meteor.subscribe('roomById', room, _.bind(this._onGotRoom,this)),
             Meteor.subscribe('playlistsForRoom', room),
             Soundcloud.checkOAuth()
         ];
+    },
+
+    _onGotRoom : function(){
+        var theRoom = Rooms.findOne({});
+        if(theRoom.live){
+            // if the room is live already, sync playback
+            Meteor.call('syncRoom',theRoom._id,function(error,response){
+                if(error){
+                    // TODO : better error handling
+                    alert('cannot sync current da room - horror');
+                    return;
+                } else {
+                    postal.publish({
+                        topic : 'playback.needs.sync',
+                        data : response
+                    });
+                }
+            });
+        }
     }
 });

@@ -1,6 +1,12 @@
 Soundcloud = {
     getFavorites : function(callback){
         SC.get("/me/favorites", function(response){
+            
+            if(response.errors){
+                //TODO: do smth here
+                return;
+            }
+
             if(callback){
                 callback(response);
             }

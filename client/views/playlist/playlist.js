@@ -17,7 +17,10 @@ Template.playlist.helpers({
 	
 	playbackPosition : function(){
 		var playbackStats = Session.get('playbackStats');
-		return playbackStats ? playbackStats.position : 0;
+		var position = playbackStats ? playbackStats.position : 0;
+		moment.duration(position)
+		return Math.floor(position / 60000) + ':' + 
+			Math.floor((position % 60000) / 1000);
 	},
 
 	playbackPositionPercentage : function(){
@@ -27,7 +30,9 @@ Template.playlist.helpers({
 
 	playlistDuration: function(){
 		var playbackStats = Session.get('playbackStats');
-		return playbackStats ? playbackStats.duration : 0;
+		var duration = playbackStats ? playbackStats.duration : 0;
+		return Math.floor(duration / 60000) + ':' + 
+			Math.floor((duration % 60000) / 1000);
 	},
 
 	// returns true if any track is playing

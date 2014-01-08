@@ -2,11 +2,13 @@
 	<h1>{{room.name}}</h1>
 	<p>{{room.description}}</p>
 	
-	{{#with room}}
-		{{#if canEdit}}
-		<strong>you can edit this list</strong>
-		{{/if}}
-	{{/with}}
+	{{#if room}}
+		{{#with room}}
+			{{#if canEdit}}
+			<strong>you can edit this list</strong>
+			{{/if}}
+		{{/with}}
+	{{/if}}
 
 	{{#if room.live}}
 		<strong>this room is live</strong>

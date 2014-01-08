@@ -5,9 +5,14 @@ PlaybackManager = function(){
     this._setup();
     this._playbackPosition = 0;
 
-    // TODO: get rid of this - debugging only
+    
 
     this.channel = postal.channel();
+    
+    this.channel.subscribe('playback.needs.sync', _.bind(this._onSync,this));
+
+    // TODO: get rid of this - debugging only
+
     this.channel.subscribe('playback.next', _.bind(function(){
         if(this._currentIndex + 1 < this._items.length){
             this._currentIndex++;
@@ -35,7 +40,7 @@ PlaybackManager.prototype = {
         },this));
     },
 
-    _playMedia : function(){
+    _playMedia : function(offset){
 
         if(this._sound){
             this._sound.destruct();
@@ -48,10 +53,33 @@ PlaybackManager.prototype = {
         SC.stream(media.stream_url, _.bind(function(sound){
             this._sound = sound;
 
-            sound.play({
+            var options = {
                 onfinish : _.bind(this._onFinish, this),
                 whileplaying : _.bind(this._onPing, this)
-            });
+            };
+
+            if(typeof offset !== 'undefined'){
+                options.position = offset;
+            }
+
+            sound.play(options);
+
+            // if(typeof offset !== 'undefined'){
+            //     // Pause an already loaded and playing song, change position, then resume.
+            //     sound.pause();
+                 
+            //     // This function triggers after the new position actually
+            //     // takes effect. It's not instantaneous, evidently. The reason why
+            //     // I'm using a callback at position 0 is that setPosition also doesn't
+            //     // set the new position exactly.
+            //     var positionCallback = function(eventPosition) {
+            //       this.clearOnPosition(0, positionCallback);
+            //       this.resume();
+            //     };
+
+            //     sound.onPosition(0, positionCallback);
+            //     sound.setPosition(offset);
+            // }
 
         },this));
     },
@@ -86,8 +114,12 @@ PlaybackManager.prototype = {
         this._playMedia();
     },
 
-    getDuration : function(){
-        return _.reduce(this._items, function(memo, media){
+    getDuration : function(items){
+        if(typeof items === 'undefined'){
+            items = this._items;
+        }
+
+        return _.reduce(items, function(memo, media){
             return memo + media.duration;
         }, 0);
     },
@@ -112,9 +144,44 @@ PlaybackManager.prototype = {
     },
 
     // things that have been played
-    _previousMedia : function(){
-        return this._currentIndex > 0 ? _.map(_.range(0, this._currentIndex), _.bind(function(i){
+    _previousMedia : function(index){
+        if(typeof index === 'undefined'){
+            index = this._currentIndex;
+        }
+
+        return index > 0 ? _.map(_.range(0, index), _.bind(function(i){
             return this._items[i];
         },this)) : [];
+    },
+
+    _onSync : function(syncData){
+        // syncing is about making sure we are playing the right song
+        // at the right time
+        // syncData.offset contains offset in ms showing how long the playback has been 
+        // going on for
+        // to sync : figure out which song should be played, start playing it at the right time  
+
+        console.log('trying to sync', syncData);
+        var offset = syncData.offset;
+        var accumulatedOffset = 0;
+        var trackIndex = -1;
+
+        var track = _.find(this._items, function(i){
+            accumulatedOffset += i.duration;
+            trackIndex++;
+            return offset < accumulatedOffset ? i : null;
+        });
+
+        if(track){
+            var mediaBeforeTheTrack = this._previousMedia(trackIndex);
+            var offsetBeforeTheTrack = this.getDuration(mediaBeforeTheTrack);
+            var trackOffset = offset - offsetBeforeTheTrack;
+
+
+            this._currentIndex = trackIndex;
+            this._playMedia(trackOffset);
+        } else {
+            alert('Looks like this room is done - no lights, no music');
+        }
     }
 };
