@@ -39,12 +39,15 @@ RoomController = RouteController.extend({
         var room = this.params.id;
         this.subscribe('roomById', room).wait();
         this.subscribe('playlistsForRoom', room).wait();
+        this.subscribe('listenersForRoom', room).wait();
     },
 
     after : function(){
         Soundcloud.getFavorites();
+
         this.render('sc-favorites', {to: 'favorites'});
         this.render('playlist', {to: 'playlist'});
+        this.render('listeners', {to : 'listeners'});
 
         this._checkSync();
     },
@@ -75,6 +78,9 @@ RoomController = RouteController.extend({
                     });
                 }
             });
+
+            //register listener
+            Meteor.call('registerListener',theRoom._id);
         }
     }
 });
