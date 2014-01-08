@@ -6,8 +6,8 @@ Router.configure({
 var filters = {
     isLoggedIn: function() {
         if (!(Meteor.loggingIn() || Meteor.user())) {
-            this.render('signin');
             this.stop();
+            Router.go('/signin?callback=' + encodeURIComponent(Router.current().path));
         }
     }
 };
@@ -28,5 +28,10 @@ Router.map(function () {
     this.route('room', {
         path: '/room/:id',
         controller: 'RoomController'
+    });
+
+    this.route('signin', {
+        path: '/signin',
+        template: 'signin'
     });
 });
