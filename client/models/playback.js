@@ -55,7 +55,7 @@ PlaybackManager.prototype = {
 
             var options = {
                 onfinish : _.bind(this._onFinish, this),
-                whileplaying : _.bind(this._onPing, this)
+                whileplaying : _.throttle(_.bind(this._onPing, this), 1000)
             };
 
             if(typeof offset !== 'undefined'){
