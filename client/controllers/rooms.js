@@ -16,6 +16,14 @@ RoomsController = RouteController.extend({
 //specific room
 RoomController = RouteController.extend({
     template: 'room',
+    yieldTemplates : {
+        'sc-favorites' : { to: 'favorites' },
+        'playlist' : {to: 'playlist'},
+        'listeners' : {to : 'listeners'}
+    },
+
+    // set to true to prevent syncup
+    synced : false,
 
     load : function(){
         this.channel = postal.channel();
@@ -28,6 +36,7 @@ RoomController = RouteController.extend({
         },this));
 
         this.channel.subscribe('room.islive', _.bind(function(){
+            this.synced = true;
             this.playbackManager.play();
         },this));
 
@@ -36,10 +45,19 @@ RoomController = RouteController.extend({
 
 
     before : function(){
-        var room = this.params.id;
-        this.subscribe('roomById', room).wait();
-        this.subscribe('playlistsForRoom', room).wait();
-        this.subscribe('listenersForRoom', room).wait();
+        // var room = this.params.id;
+        // this.subscribe('roomById', room).wait();
+        // this.subscribe('playlistsForRoom', room).wait();
+        // this.subscribe('listenersForRoom', room).wait();
+
+        Deps.autorun(_.bind(function () {
+            if(this.ready()){
+                console.log("everything is ready");
+                this._checkSync();
+            } else {
+                console.log("NOT everything is ready");
+            }
+        },this));
     },
 
     after : function(){
@@ -61,26 +79,42 @@ RoomController = RouteController.extend({
             }
         }
 
+        // this.render('sc-favorites', {to: 'favorites'});
+        // this.render('playlist', {to: 'playlist'});
+        // this.render('listeners', {to : 'listeners'});
+
 
         Soundcloud.getFavorites();
-
-        this.render('sc-favorites', {to: 'favorites'});
-        this.render('playlist', {to: 'playlist'});
-        this.render('listeners', {to : 'listeners'});
-
-        this._checkSync();
     },
 
     waitOn : function(){
-        return Soundcloud.checkOAuth();
+        var room = this.params.id;
+
+        return [
+            Soundcloud.checkOAuth(),
+            this.subscribe('roomById', room),
+            this.subscribe('playlistsForRoom', room),
+            this.subscribe('listenersForRoom', room)
+        ];
     },
 
     _checkSync : function(){
+
+        if(this.synced){
+            return;
+        }
+
         var theRoom = Rooms.findOne({ _id : this.params.id });
-        
+        var thePlaylist = Playlists.findOne({ room : this.params.id });
+
         if(typeof theRoom === 'undefined'){
             console.log('trying to sync the room but it is not ready');
             return;
+        }
+
+        if(typeof thePlaylist === 'undefined'){
+            console.log('trying to sync the room but the playlist is not ready');
+            return;   
         }
 
         if(theRoom.live){
