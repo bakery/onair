@@ -8,18 +8,23 @@
 		<h4>{{playbackPosition}}/{{playlistDuration}}</h4>
 		<hr>
 	{{/if}}
-	{{#with playlist}}
-		<ul class=" list-group">
-			{{#each media}}
-			<li class="list-group-item" style="opacity:{{#if isPlaying}}1{{else}}0.5{{/if}};">
-			<h3>{{title}} <small>by {{username}}</small></h3>
-			{{#if artwork_url}}
-			<img width="50" src="{{artwork_url}}">
-			{{/if}}
-			
-			</li>
-			{{/each}}
-		</ul>		
-		<hr>
-	{{/with}}
+
+	{{#if playlist.media}}
+		{{#with playlist}}	
+			<ul class=" list-group">
+				{{#each media}}
+				<li class="list-group-item" style="opacity:{{#if isPlaying}}1{{else}}0.5{{/if}};">
+				<h3>{{title}} <small>by {{username}}</small></h3>
+				{{#if artwork_url}}
+				<img width="50" src="{{artwork_url}}">
+				{{/if}}
+				
+				</li>
+				{{/each}}
+			</ul>
+			<hr>
+		{{/with}}
+	{{else}}
+		<strong>Add some tracks to get this party started -> </strong>
+	{{/if}}
 </template>
