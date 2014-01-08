@@ -2,9 +2,15 @@
 
 Meteor.methods({
     createRoom: function(options){
+        
+        var currentUser = Meteor.user();
+
         var data = _.extend(options, {
             live : false,
-            djs : [Meteor.user().profile]
+            djs : [{
+                profile : currentUser.profile,
+                id : currentUser._id
+            }]
         });
 
         var room = Rooms.insert(data);

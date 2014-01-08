@@ -11,7 +11,14 @@ Template.room.events = {
 
 Template.room.helpers({
     canEdit : function(){
-        return this.djs ? this.djs.indexOf(Meteor.userId()) !== -1 : false;
+        var dj = _.find(this.djs || [], function(dj){
+            return dj.id === Meteor.userId();
+        });
+        return (typeof dj !== 'undefined');
+    },
+
+    djProfile : function(){
+        return this.djs ? this.djs[0] : null;
     }
 });
 

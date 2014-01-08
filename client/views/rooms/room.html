@@ -5,17 +5,27 @@
 	{{#if room}}
 		{{#with room}}
 			{{#if canEdit}}
-			<strong>you can edit this list</strong>
+				{{#if playlist.media}}
+					{{#if room.live}}
+						<strong>this room is live</strong>
+					{{else}}
+						{{#if playlist.media}}
+						<button data-room="{{room._id}}" class="button-golive">Go live</button>
+						{{/if}}
+					{{/if}}
+				{{else}}
+
+				{{/if}}
+			{{else}}
+				{{#if djProfile}}
+					{{#with djProfile.profile}}
+						<img src="{{picture}}" width="50">
+						<h4>{{name}}</h4>
+						<hr>
+					{{/with}}
+				{{/if}}
 			{{/if}}
 		{{/with}}
-	{{/if}}
-
-	{{#if room.live}}
-		<strong>this room is live</strong>
-	{{else}}
-		{{#if playlist.media}}
-		<button data-room="{{room._id}}" class="button-golive">Go live</button>
-		{{/if}}
 	{{/if}}
 	<hr>
 	<div class="row">
