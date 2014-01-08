@@ -43,6 +43,25 @@ RoomController = RouteController.extend({
     },
 
     after : function(){
+        var theRoom = Rooms.findOne({ _id : this.params.id });
+
+        if(theRoom){
+            if(!theRoom.live){
+                var dj = _.find(theRoom.djs || [], function(dj){
+                    return dj.id === Meteor.userId();
+                });
+
+                if(typeof dj === 'undefined'){
+                    // current user is not one of the djs 
+                    // and the room is not live - abort
+                    
+                    this.stop();
+                    this.render('404');
+                }
+            }
+        }
+
+
         Soundcloud.getFavorites();
 
         this.render('sc-favorites', {to: 'favorites'});
