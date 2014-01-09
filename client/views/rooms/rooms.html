@@ -1,14 +1,28 @@
 <template name="rooms">
-	{{#if canCreateRoom}}
-		{{>newRoomForm }}
-		<hr>
-	{{/if}}
-	<ul class="list-group">
-		{{#each rooms}}
-			<li class="list-group-item">
-				<a href="/room/{{_id}}">{{name}}</a>
-				<p>{{description}}</p>
-			</li>
-		{{/each}}
-	</ul>
+	
+	<div class="row">
+		<div class="col-md-12">
+			{{#if canCreateRoom}}
+				{{>newRoomForm }}
+				<hr>
+			{{/if}}
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-12">
+			<ul class="list-group">
+				{{#each rooms}}
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-md-12">
+								<a href="/room/{{_id}}"><h3>{{name}}</h3></a>
+								<p>{{description}}</p>
+							</div>
+						</div>
+					</li>
+				{{/each}}
+			</ul>
+		</div>
+	</div>
 </template>

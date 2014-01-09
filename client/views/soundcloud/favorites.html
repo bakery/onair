@@ -1,13 +1,21 @@
-<template name="sc-favorites">
-	<ul class="list-group">
-		{{#each favorites}}
-			<li class="list-group-item">
-				<h3>{{title}} <small>by {{user.username}}</small></h3>
-				<button class="add-button" data-id="{{id}}">+ Add to playlist</button>
+<template name="sc-favorites">	
+	{{#each favorites}}
+		
+		<div class="favorites row">
+			<!-- <div class="col-md-1">
 				{{#if artwork_url}}
-					<img width="100" src="{{artwork_url}}">
+					<img width="40px" src="{{artwork_url}}">
 				{{/if}}
-			</li>
-		{{/each}}
-	</ul>
+			</div> -->
+			<div class="col-md-9">
+				<h5>{{title}} <small>by {{user.username}}</small></h5>
+			</div>
+			<div class="col-md-3 text-center">
+				<button data-id="{{id}}" type="button" class="add-button btn btn-default"><span class="glyphicon glyphicon-music"></span> +</button>
+			</div>
+		</div>
+
+		<hr>
+		
+	{{/each}}
 </template>

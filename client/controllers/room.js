@@ -1,52 +1,14 @@
 //specific room
 
-RoomController = RouteController.extend({
-    template: 'room',
-    yieldTemplates : {
-        'sc-favorites' : { to: 'favorites' },
-        'playlist' : {to: 'playlist'},
-        'listeners' : {to : 'listeners'}
-    },
 
+RoomController = RouteController.extend({
+    //template: 'room',
     // set to true to prevent syncup
     synced : false,
-
-    load : function(){
-        this.channel = postal.channel();
-
-        this.channel.subscribe('track.addtoplaylist', _.bind(function(track){
-            Meteor.call('addMediaToPlaylist', {
-                media : track,
-                room : this.params.id
-                }, function(){});
-        },this));
-
-        this.channel.subscribe('room.islive', _.bind(function(){
-            this.synced = true;
-            this.playbackManager.play();
-        },this));
-
-        this.playbackManager = new PlaybackManager();
-    },
-
-
-    before : function(){
-        // var room = this.params.id;
-        // this.subscribe('roomById', room).wait();
-        // this.subscribe('playlistsForRoom', room).wait();
-        // this.subscribe('listenersForRoom', room).wait();
-
-        Deps.autorun(_.bind(function () {
-            if(this.ready()){
-                console.log("everything is ready");
-                this._checkSync();
-            } else {
-                console.log("NOT everything is ready");
-            }
-        },this));
-    },
+    firstRender : true,
 
     after : function(){
+        console.log('RoomController:after');
         var theRoom = Rooms.findOne({ _id : this.params.id });
 
         if(theRoom){
@@ -64,13 +26,46 @@ RoomController = RouteController.extend({
                 }
             }
         }
+    },
 
-        // this.render('sc-favorites', {to: 'favorites'});
-        // this.render('playlist', {to: 'playlist'});
-        // this.render('listeners', {to : 'listeners'});
+    action : function(){
+
+        if(this.ready()){
+
+            var theRoom = Rooms.findOne({ _id : this.params.id });
+            var dj = _.find(theRoom.djs || [], function(dj){
+                return dj.id === Meteor.userId();
+            });
+
+            this.yieldTemplates = {
+                'playlist' : {to: 'playlist'},
+                'listeners' : {to : 'listeners'}
+            };
 
 
-        Soundcloud.getFavorites();
+            if(typeof dj !== 'undefined'){
+                // editable room
+                this.template = 'editableRoom';
+                this.yieldTemplates['sc-favorites'] = {
+                    to : 'favorites'
+                };
+            } else {
+                // 'read-only' room
+                this.template = 'room';
+            }
+
+
+            
+
+            RouteController.prototype.action.call(this);
+
+            if(this.firstRender){
+                this._checkSync();
+            }
+
+            console.log('Room controller : action is called');
+            this.firstRender = false;
+        }
     },
 
     waitOn : function(){
@@ -121,5 +116,39 @@ RoomController = RouteController.extend({
             //register listener
             Meteor.call('registerListener',theRoom._id);
         }
+    },
+
+    load : function(){
+        this.channel = postal.channel();
+
+        this.channel.subscribe('track.addtoplaylist', _.bind(function(track){
+            Meteor.call('addMediaToPlaylist', {
+                media : track,
+                room : this.params.id
+                }, function(){});
+        },this));
+
+        this.channel.subscribe('room.islive', _.bind(function(){
+            this.synced = true;
+            this.playbackManager.play();
+        },this));
+
+        this.playbackManager = new PlaybackManager();
     }
 });
+
+// RoomController = RouteController.extend({
+//     ,
+
+
+//     // waitOn : function(){
+//     //     var room = this.params.id;
+
+//     //     return [
+//     //         Soundcloud.checkOAuth(),
+//     //         this.subscribe('roomById', room),
+//     //         this.subscribe('playlistsForRoom', room),
+//     //         this.subscribe('listenersForRoom', room)
+//     //     ];
+//     // },
+// });

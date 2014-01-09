@@ -1,0 +1,57 @@
+<template name="editableRoom">
+	<div class="row">
+		<div class="col-md-12">
+			<h1>{{room.name}} <small>{{room.description}}</small></h1>
+		</div>
+	</div>
+	<hr>
+	{{#if room}}
+		{{#with room}}
+			{{#if canEdit}}
+				
+				<div class="row">
+					{{#if room.live}}
+					{{else}}
+						{{#if playlist.media}}
+							<div class="col-md-12">
+								<button data-room="{{room._id}}" type="button" class="btn btn-success button-golive btn-lg">Go live</button>
+							</div>
+						{{else}}
+							<div class="col-md-12">
+								<div class="alert alert-info">Yo broski. Once you have a bunch of tracks in your queue, you can go live and start sharing the sounds with your homies.</div>	
+							</div>
+						{{/if}}
+					{{/if}}
+				</div>
+				
+				
+				{{#if room.live}}
+					<h2 class="live-label"><span>on air</span></h2>
+				{{/if}}
+				
+			{{else}}
+				{{#if djProfile}}
+					{{#with djProfile.profile}}
+						<img src="{{picture}}" width="50">
+						<h4>{{name}}</h4>
+						<hr>
+					{{/with}}
+				{{/if}}
+			{{/if}}
+		{{/with}}
+	{{/if}}
+	<div class="row">
+		<div class="col-md-12">
+			{{yield 'listeners'}}
+		</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-md-4">
+			{{yield 'favorites'}}
+		</div>
+		<div class="col-md-8">
+			{{yield 'playlist'}}
+		</div>
+	</div>
+</template>

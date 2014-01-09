@@ -1,5 +1,8 @@
 Soundcloud = {
     getFavorites : function(callback){
+
+        console.log('SC : getting favorites');
+
         SC.get("/me/favorites", function(response){
             
             if(response.errors){
@@ -16,6 +19,9 @@ Soundcloud = {
     },
 
     checkOAuth : function(){
+
+        var Soundcloud = this;
+
         return Meteor.subscribe('SC.OAuth',function(){
 
             //TODO: check for errors
@@ -27,6 +33,9 @@ Soundcloud = {
                     if(accessToken){
                         console.log('setting access token');
                         SC.accessToken(accessToken);
+
+                        //load favorites
+                        Soundcloud.getFavorites();
                     }
                 }
             }

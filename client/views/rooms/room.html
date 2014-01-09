@@ -1,44 +1,38 @@
 <template name="room">
-	<h1>{{room.name}}</h1>
-	<p>{{room.description}}</p>
-	
-	{{#if room}}
-		{{#with room}}
-			{{#if canEdit}}
-				{{#if playlist.media}}
-					{{#if room.live}}
-						<strong>this room is live</strong>
-					{{else}}
-						{{#if playlist.media}}
-						<button data-room="{{room._id}}" class="button-golive">Go live</button>
-						{{/if}}
-					{{/if}}
-				{{else}}
-
-				{{/if}}
-			{{else}}
-				{{#if djProfile}}
-					{{#with djProfile.profile}}
-						<img src="{{picture}}" width="50">
-						<h4>{{name}}</h4>
-						<hr>
-					{{/with}}
-				{{/if}}
-			{{/if}}
-		{{/with}}
-	{{/if}}
-	<hr>
 	<div class="row">
-		<div class="col-md-6">
-			{{yield 'playlist'}}
-		</div>
-		<div class="col-md-6">
-			{{yield 'favorites'}}
+		<div class="col-md-12">
+			<h1>{{room.name}} <small>{{room.description}}</small></h1>
 		</div>
 	</div>
+	<hr>
+	{{#if room}}
+		{{#if room.live}}
+			<h2 class="live-label"><span>on air</span></h2>
+		{{/if}}
+
+		{{#if djProfile}}
+			<div class="row">
+				<div class="col-md-12">
+				{{#with djProfile.profile}}
+					<img src="{{picture}}" width="50">
+					<h4>{{name}}</h4>
+					<hr>
+				{{/with}}
+				</div>
+			</div>
+		{{/if}}
+			
+	{{/if}}
+
 	<div class="row">
 		<div class="col-md-12">
 			{{yield 'listeners'}}
+		</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-md-12">
+			{{yield 'playlist'}}
 		</div>
 	</div>
 </template>

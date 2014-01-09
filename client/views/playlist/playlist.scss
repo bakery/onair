@@ -1,0 +1,47 @@
+ul.playlist {
+	padding : 0; margin : 0;
+	list-style-type: none;
+	text-align: center;
+
+	$tile-size : 150px;
+
+	li {
+		position: relative;
+		margin: 30px;
+
+		width: $tile-size;
+		min-height: $tile-size;
+		display: -moz-inline-stack;
+		display: inline-block;
+		vertical-align: top;
+		zoom: 1;
+		*display: inline;
+		_height: $tile-size;
+		
+		&.active {
+			img {
+				opacity: 1;
+			}
+		}
+
+		img {
+			width: $tile-size;
+			opacity: 0.7;
+		}
+
+		h4 {
+			text-align: left;
+		}
+
+		// .title-wrapper {
+		// 	text-align: left;
+		// 	position: absolute;
+		// 	background-color: #000;
+		// 	z-index: 10000; display: inline-block;
+
+		// 	h4 {
+		// 		h4 : #fff;
+		// 	}
+		// }
+	}
+}

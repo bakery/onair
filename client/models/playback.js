@@ -163,7 +163,10 @@ PlaybackManager.prototype = {
             this._currentIndex = trackIndex;
             this._playMedia(trackOffset);
         } else {
-            alert('Looks like this room is done - no lights, no music');
+            // TODO: fix this
+            if(this._items.length !== 0){
+                alert('Looks like this room is done - no lights, no music');
+            }
             console.log('room with no music', syncData, this._items);
         }
     }

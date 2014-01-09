@@ -10,6 +10,10 @@ Template['sc-favorites'].favorites = function(){
 	return Session.get('sc.favorites');
 };
 
+Template['sc-favorites'].rendered = function(){
+	console.log('SC-Favorites : rendered');
+};
+
 Template['sc-favorites'].events = {
 	'click .add-button' : function(event, template){
 		var id = $(event.currentTarget).data('id');

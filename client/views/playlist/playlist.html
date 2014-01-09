@@ -11,14 +11,13 @@
 
 	{{#if playlist.media}}
 		{{#with playlist}}	
-			<ul class=" list-group">
+			<ul class="playlist">
 				{{#each media}}
-				<li class="list-group-item" style="opacity:{{#if isPlaying}}1{{else}}0.5{{/if}};">
-				<h3>{{title}} <small>by {{username}}</small></h3>
-				{{#if artwork_url}}
-				<img width="50" src="{{artwork_url}}">
+				<li {{#if isPlaying}}class="active"{{/if}}>
+				{{#if artwork}}
+				<img src="{{artwork}}">
 				{{/if}}
-				
+				<h4>{{title}} <small>by {{user.username}}</small></h4>
 				</li>
 				{{/each}}
 			</ul>
