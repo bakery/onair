@@ -1,28 +1,32 @@
 <template name="rooms">
 	
-	<div class="row">
-		<div class="col-md-12">
-			{{#if canCreateRoom}}
-				{{>newRoomForm }}
-				<hr>
-			{{/if}}
+	<div class="col-md-3"></div>
+	<div class="col-md-6">
+		<div class="thumbnail" style="border:none;">
+			<img width="150" height="150" src="/images/onair.png" alt="on air">
+			<div class="caption">
+					{{#if canCreateRoom}}
+						<hr>
+						<h3>Create a new room</h3>
+						{{>newRoomForm }}
+						<hr>
+					{{/if}}
+					<h3>Browse existing rooms</h3>
+					<ul class="list-group">
+						{{#each rooms}}
+							<li class="list-group-item">
+								<div class="row">
+									<div class="col-md-12">
+										<a href="/room/{{_id}}"><h3>{{name}}</h3></a>
+										<p>{{description}}</p>
+									</div>
+								</div>
+							</li>
+						{{/each}}
+					</ul>		
+			</div>
 		</div>
 	</div>
+	<div class="col-md-3"></div>
 	
-	<div class="row">
-		<div class="col-md-12">
-			<ul class="list-group">
-				{{#each rooms}}
-					<li class="list-group-item">
-						<div class="row">
-							<div class="col-md-12">
-								<a href="/room/{{_id}}"><h3>{{name}}</h3></a>
-								<p>{{description}}</p>
-							</div>
-						</div>
-					</li>
-				{{/each}}
-			</ul>
-		</div>
-	</div>
 </template>
