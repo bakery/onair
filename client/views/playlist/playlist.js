@@ -17,7 +17,7 @@ Template.playlist.helpers({
 		if(this.artwork_url){
 			return this.artwork_url.replace('large.','t300x300.');
 		} else {
-			return '';
+			return '/images/casette.png';
 		}
 	},
 
