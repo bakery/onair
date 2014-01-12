@@ -1,21 +1,29 @@
+var dep = new Deps.Dependency;
+
+
 Soundcloud = {
-    getFavorites : function(callback){
+    getFavorites : function(){
+        dep.depend();
 
         console.log('SC : getting favorites');
 
-        SC.get("/me/favorites", function(response){
+        if(typeof this.favorites === 'undefined'){
+            this.favorites = [];
             
-            if(response.errors){
-                //TODO: do smth here
-                return;
-            }
+            SC.get("/me/favorites",_.bind(function(response){
+                
+                if(response.errors){
+                    //TODO: do smth here
+                    return;
+                }
 
-            if(callback){
-                callback(response);
-            }
+                this.favorites = response;
+                dep.changed();                
 
-            Session.set('sc.favorites',response);
-        });
+            },this));
+        }
+
+        return this.favorites;
     },
 
     checkOAuth : function(){
@@ -33,9 +41,6 @@ Soundcloud = {
                     if(accessToken){
                         console.log('setting access token');
                         SC.accessToken(accessToken);
-
-                        //load favorites
-                        Soundcloud.getFavorites();
                     }
                 }
             }

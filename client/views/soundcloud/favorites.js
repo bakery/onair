@@ -1,17 +1,13 @@
 var DataHelpers = {
 	getTrackData : function(id){
-		return _.find(Session.get('sc.favorites'), function(f){
+		return _.find(Soundcloud.getFavorites(), function(f){
 			return f.id === id;
 		});
 	}
 };
 
 Template['sc-favorites'].favorites = function(){
-	return Session.get('sc.favorites');
-};
-
-Template['sc-favorites'].rendered = function(){
-	console.log('SC-Favorites : rendered');
+	return Soundcloud.getFavorites();
 };
 
 Template['sc-favorites'].events = {
