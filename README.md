@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/thebakeryio/onair.png?branch=master)](https://travis-ci.org/thebakeryio/onair)
+
 # Play good music with Soundcloud 
 
 Note: Work in progress
