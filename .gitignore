@@ -2,3 +2,5 @@
 *.scssc
 .sass-cache/*
 settings
+smart.lock
+*.log
