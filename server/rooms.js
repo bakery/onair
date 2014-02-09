@@ -3,12 +3,21 @@
 Meteor.methods({
     createRoom: function(options){
         
+        check(options, {
+            name : String,
+            description : String
+        });
+
+
         var currentUser = Meteor.user();
+        if(!currentUser){
+            throw new Meteor.Error(401, 'You must be logged in to create a room');
+        }
 
         var data = _.extend(options, {
             live : false,
             djs : [{
-                profile : currentUser.profile,
+                profile : currentUser,
                 id : currentUser._id
             }]
         });
@@ -18,7 +27,7 @@ Meteor.methods({
         // auto create a playlist for the new room
         Meteor.call('createPlaylist', room, []);
 
-        return room;
+        return Rooms.findOne({ _id : room });
     },
 
     goLive : function(room){
