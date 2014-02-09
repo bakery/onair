@@ -22,20 +22,40 @@ Grab Meteorite
 npm install -g meteorite
 ```
 
+Get yourself laika
+
+```
+npm install -g laika
+```
+
 Create settings folder with .json settings file (i keep one for dev and one for production)
 
 ```
 {
-	"soundcloud" : {
-		"clientId" : "soundcloud-app-id",
-		"secret" : "soundcloud-app-secret"
-	},
+	"authentication" : {
+		"soundcloud" : {
+			"clientId" : "soundcloud-app-id",
+			"secret" : "soundcloud-app-secret"
+		},
 
-	"facebook" : {
-		"appId" : "facebook-app-id",
-		"secret" : "facebook-app-id"
+		"facebook" : {
+			"appId" : "facebook-app-id",
+			"secret" : "facebook-app-id"
+		}
 	}
 }
+```
+
+## Testing the app
+
+Make sure test.json excludes authentication section. Laika will need a mongo instance running
+
+```
+mongod --smallfiles --noprealloc --nojournal
+```
+
+```
+laika --settings settings/test.json -u bdd
 ```
 
 ## Running the app
@@ -52,6 +72,6 @@ mrt deploy app-url.meteor.com --settings settings/production.json
 
 ## Attributions
 
-Air Balloon icon [Matteo Manenti](http://thenounproject.com/term/hot-air-balloon/1835/)
-Casette icon [Pele Chaengsavang](http://thenounproject.com/term/cassette/21740/)
-Social media icon font [Rondo](http://www.tajfa.com/projects/rondo/)
+-Air Balloon icon [Matteo Manenti](http://thenounproject.com/term/hot-air-balloon/1835/)
+-Casette icon [Pele Chaengsavang](http://thenounproject.com/term/cassette/21740/)
+-Social media icon font [Rondo](http://www.tajfa.com/projects/rondo/)
