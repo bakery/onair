@@ -133,7 +133,7 @@ RoomController = RouteController.extend({
             this.playbackManager.play();
         },this));
 
-        this.playbackManager = new PlaybackManager();
+        this.playbackManager = PlaybackManager.getInstance();
     }
 });
 

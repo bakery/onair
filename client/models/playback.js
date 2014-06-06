@@ -1,4 +1,4 @@
-PlaybackManager = function(){
+var __PlaybackManager = function(){
     this._items = [];
     this._playing = false;
     this._currentIndex = 0;
@@ -28,7 +28,19 @@ PlaybackManager = function(){
 };
 
 
-PlaybackManager.prototype = {
+var __instance;
+
+PlaybackManager = {
+    getInstance : function(){
+        if(!__instance){
+            __instance = new __PlaybackManager();
+        }
+        
+        return __instance;
+    }
+};
+
+__PlaybackManager.prototype = {
 
     _setup : function(){
         Deps.autorun(_.bind(function () {
@@ -118,6 +130,22 @@ PlaybackManager.prototype = {
             var currentPosition = this._sound ? this._sound.position : 0;
 
             return previousTime + currentPosition;
+        }
+    },
+
+    isMute : function(){
+        return this._sound ? this._sound.muted : false;
+    },
+
+    mute : function(){
+        if(this._sound){
+            this._sound.mute();
+        }
+    },
+
+    unmute : function(){
+        if(this._sound){
+            this._sound.unmute();
         }
     },
 
