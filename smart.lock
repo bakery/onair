@@ -3,10 +3,10 @@
   "dependencies": {
     "basePackages": {
       "iron-router": {
-        "version": "0.6.2"
+        "version": "0.7.1"
       },
       "scss": {
-        "version": "0.7.0"
+        "version": "0.8.7"
       },
       "bourbon": {
         "version": "3.1.8.1"
@@ -15,22 +15,17 @@
         "version": "0.1.2"
       },
       "bootstrap-3": {
-        "version": "3.1.0-1"
+        "version": "3.1.1-1"
       },
       "moment": {
-        "version": "2.5.1"
+        "version": "2.6.0"
       }
     },
     "packages": {
       "iron-router": {
         "git": "https://github.com/EventedMind/iron-router.git",
-        "tag": "v0.6.2",
-        "commit": "ce56e58b45624dce992490f3a1c10f10d3948bae"
-      },
-      "scss": {
-        "git": "https://github.com/fourseven/meteor-scss.git",
-        "tag": "v0.7.0",
-        "commit": "39f60d58c2b890bdd897ef52188644f3093fc2ac"
+        "tag": "v0.7.1",
+        "commit": "d1ffb3f06ea4c112132b030f2eb1a70b81675ecb"
       },
       "bourbon": {
         "git": "https://github.com/chicagogrooves/meteor-bourbon.git",
@@ -44,13 +39,18 @@
       },
       "bootstrap-3": {
         "git": "https://github.com/mangasocial/meteor-bootstrap-3.git",
-        "tag": "v3.1.0-1",
-        "commit": "329dccb08bfc18c635676dea600ac9953162cda9"
+        "tag": "v3.1.1-1",
+        "commit": "63dd38968828bb8963636df93e9a1c45e2dfe67e"
       },
       "moment": {
         "git": "https://github.com/acreeger/meteor-moment.git",
-        "tag": "v2.5.1",
-        "commit": "8c9bc5d3fc96705057737cb9743d555417f6e551"
+        "tag": "v2.6.0",
+        "commit": "26156df681750fd6e6ed77043eef32b6653ebbdf"
+      },
+      "blaze-layout": {
+        "git": "https://github.com/EventedMind/blaze-layout.git",
+        "tag": "v0.2.4",
+        "commit": "b40e9b0612329288d75cf52ad14a7da64bb8618f"
       },
       "soundcloud": {
         "git": "https://github.com/sylvaingi/meteor-soundcloud.git",

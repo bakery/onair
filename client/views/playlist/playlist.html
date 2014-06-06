@@ -13,12 +13,13 @@
 		{{#with playlist}}	
 			<ul class="playlist">
 				{{#each media}}
-				<li {{#if isPlaying}}class="active"{{/if}}>
-				{{#if artwork}}
-				<img src="{{artwork}}">
-				{{/if}}
-				<h4>{{title}} <small>by {{user.username}}</small></h4>
-				</li>
+					<!-- TODO: add support for playback state tracking -->
+					<li>
+						{{#if artwork}}
+						<img src="{{artwork}}">
+						{{/if}}
+						<h4>{{title}} <small>by {{user.username}}</small></h4>
+					</li>
 				{{/each}}
 			</ul>
 			<hr>

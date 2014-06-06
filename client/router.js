@@ -12,7 +12,7 @@ var filters = {
     }
 };
 
-Router.before(filters.isLoggedIn, {only: ['room']});
+Router.onBeforeAction(filters.isLoggedIn, {only: ['room']});
 
 Router.map(function () {
     this.route('landing', {

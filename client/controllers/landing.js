@@ -1,7 +1,7 @@
 LandingController = RouteController.extend({
     template: 'landing',
 
-    before : function(){
+    onBeforeAction : function(){
         Deps.autorun(function () {
             if(Meteor.user()){
                 Router.go('rooms');
@@ -9,7 +9,7 @@ LandingController = RouteController.extend({
         });
     },
 
-    after : function(){
+    onAfterAction : function(){
         this.render('signin',{ to : 'auth'});
     }
 });

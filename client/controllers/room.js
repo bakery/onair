@@ -7,7 +7,7 @@ RoomController = RouteController.extend({
     synced : false,
     firstRender : true,
 
-    after : function(){
+    onAfterAction : function(){
         console.log('RoomController:after');
         var theRoom = Rooms.findOne({ _id : this.params.id });
 
@@ -118,7 +118,7 @@ RoomController = RouteController.extend({
         }
     },
 
-    load : function(){
+    onRun : function(){
         this.channel = postal.channel();
 
         this.channel.subscribe('track.addtoplaylist', _.bind(function(track){
