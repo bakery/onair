@@ -48,9 +48,13 @@ Template.playlist.helpers({
 	},
 
 	// used in with track context - determines if current track is playing
-	isPlaying : function(){
+	playingClass : function(){
 		var playbackStats = Session.get('playbackStats');
-		return playbackStats ?
-			this.id === playbackStats.media.id : false;
+
+		if(playbackStats && (this.id === playbackStats.media.id)){
+			return 'active';
+		}
+
+		return '';
 	}
 });

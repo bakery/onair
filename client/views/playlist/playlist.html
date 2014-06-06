@@ -13,8 +13,7 @@
 		{{#with playlist}}	
 			<ul class="playlist">
 				{{#each media}}
-					<!-- TODO: add support for playback state tracking -->
-					<li>
+					<li class="{{playingClass}}">
 						{{#if artwork}}
 						<img src="{{artwork}}">
 						{{/if}}
